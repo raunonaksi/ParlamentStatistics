@@ -1,0 +1,38 @@
+<html>
+<head>
+  <title>Riigikogu</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap-theme.min.css">
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+  <script type="text/javascript">
+    $(document).ready(function() {
+    $('#nav-container').load('/menu.html');
+    });
+  </script>
+
+</head>
+<body>
+  <div style="margin:100px;">
+   <div id='nav-container'> </div>
+    <div class="jumbotron"  style="padding:40px;">
+      <h2>Seminar on Business Intelligence!</h2>
+      <p>We wondered how Estonia parlament members are attending and voting during the official sessions. First we contacted the goverment for getting access to the API, however there wasn't any, so we scraped data from www.riigikogu.ee.  </p>
+      <h2>Dataset</h2>
+      <p>Data was scraped from all the meetings, which were held between 30-03-2015 (First session of the new parlament) and to 23-05-2016. There are information about 120 members in the datadase. The maximum number of parlament members is 101, but due to the fact that some of the members reassigned. This means that these members where replaced. During that period there were 772 different votings.</p>
+      <p></p>
+
+      <h2>Used frameworks:</h2>
+        <ul>
+          <li>Scrapy - Web scraping</li>
+          <li>Node.js, Express - Back-end</li>
+          <li>SQLlite - Database</li>
+          <li>HTML, Bootstrap, CSS - Front-end</li>
+          <li>D3 - Graphs</li>
+        </ul>
+        <h2><a href="https://bitbucket.org/biseminar/project">Crawler repository</a></h2>
+      <p><a class="btn btn-primary btn-lg" href="#" role="button">Project members</a></p>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,96 @@
+<html>
+<head>
+  <title>Riigikogu</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap-theme.min.css">
+  <link rel="stylesheet" href="css/style.css" type="text/css">
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+  <script src="http://d3js.org/d3.v3.min.js"  charset="utf-8"></script>
+  <script src="/js/d3pie.min.js"></script>
+  <script>
+    var getatt = $.get( "http://localhost:3000/parlament", function( data ) {
+      $( "test" )
+        .append( "Present: " + data.present )
+        .append( "Present: " + data.notpresent );
+    }, "json" );
+  </script>
+
+  <script type="text/javascript">
+    $(document).ready(function() {
+    $('#nav-container').load('/menu.html');
+    });
+  </script>
+</head>
+<body>
+  <div style="margin:100px;">
+  <div id='nav-container'> </div>
+    <div class="jumbotron"  style="padding:40px;">
+      <h2>Top 5 missing persons from the parlament sessions are</h2>
+      <div id="topmissing"></div>     
+      <script>
+        $.get("http://localhost:3000/gettopmis",function(data){
+          data.forEach(function(elem){
+            $("#topmissing").append('<div> Name: '+elem.id+ " - Missing "+Math.round(elem.value)+"%"+'</div>')
+          },'json');
+        });
+      </script>
+      <h2>Overall attendance</h2>
+        <div id="pieChart"></div>
+        <script>
+          var data = [];
+          d3.json("http://localhost:3000/getatt", function (error, json){
+                if (error) return console.warn(error);
+                 $.each(json, function(d,i){
+                  data.push({
+                    label: i.status,
+                    value: i.value
+                  })
+                })
+               var pie = new d3pie("pieChart", {
+                      "header": {
+                        "title": {
+                          "text": "Overall attendance",
+                          "fontSize": 22,
+                          "font": "verdana"
+                        },
+                      },
+                      "size": {
+                        "canvasHeight": 400,
+                        "canvasWidth": 590
+                      },
+                      "data": {
+                        "content": data
+                      },
+                      "labels": {
+                        "outer": {
+                          "pieDistance": 32
+                        }
+                       }
+                });
+
+          });
+        </script>
+      <h2>Overall attendance by fraction</h2>
+      <div id="overattt"></div>     
+      <script>
+        $.get("http://localhost:3000/overatt",function(data){
+          data.forEach(function(elem){
+            $("#overattt").append('<div> Fraction: '+elem.id+ " - Missing "+Math.round(elem.value)+"%"+'</div>')
+          },'json');
+        });
+      </script>
+      <h2>Most hard working persons are</h2>
+      <div id="topatt"></div>     
+      <script>
+        $.get("http://localhost:3000/gettopatt",function(data){
+          data.forEach(function(elem){
+            $("#topatt").append('<div> Name: '+elem.id+ " - Present "+(100-Math.round(elem.value))+"%"+'</div>')
+          },'json');
+        });
+      </script>
+    </div>
+  </div>
+</body>
+</html>
