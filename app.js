@@ -141,7 +141,6 @@ app.get('/gettopatt', function (req, res) {
   function(){
   	var top = []
 	for (var i = 0, keys = Object.keys(map), ii = keys.length; i < ii; i++) {
-		console.log('key : ' + keys[i] + ' val : ' + map[keys[i]]);
 	  if (map[keys[i]][0] >= 400) {
 	  	var protsent = (map[keys[i]][1]/map[keys[i]][0])*100;
 	  	if (top.length < 5) {
@@ -172,6 +171,17 @@ app.get('/getatt', function (req, res) {
   function(){
   		response.push({status: "Present", value: pre})
   		response.push({status: "Not Present", value: notpre})
+		res.json(response);
+  });
+});
+
+app.get('/getTimelineAtt', function (req, res) {
+	var response = [];
+	db.each("SELECT votings.id AS id, present, date FROM votings", function(err, row) {
+		var dateInt = row.date.slice(0,2) + row.date.slice(3,5) + row.date.slice(6,8);
+		response.push({date: dateInt, value: row.present})
+	},
+  function(){
 		res.json(response);
   });
 });
